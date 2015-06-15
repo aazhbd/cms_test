@@ -1,0 +1,90 @@
+{% extends "main.twig" %}
+
+{% block head %}
+    {{ parent() }}
+    {% verbatim %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#errors").hide();
+        });
+    </script>
+    {% endverbatim %}
+{% endblock %}
+
+{% block contentbody %}
+    {{ parent() }}
+    <div style="width:98%;">
+        <div id="errors"></div>
+        <br />
+        <div  style="background: #eee; padding: 5px;">
+            <a href="{{ path_url_postfix }}/admin/categories/viewall/" title="Article Management">Back to Category Management</a> - {% if action == "add" %} Add Category {% else %} Edit Category {% endif %}
+        </div>
+        <br />
+        <form method="post" action="{{ path_url_postfix }}/admin/submit/category" id="frmcategory" >
+           <fieldset>
+                {% if action == "add" %}
+                    <legend>Add Category</legend>
+                {% elseif action == "update" %}
+                    <legend>Update Category</legend>
+                {% endif %}
+                <input type="hidden" value="{{ action }}" name="action" />
+                <input type="hidden" value="{{ data.id }}" name="id" />
+                <div>
+                    <span>
+                        <div style="float:left; width:120px;"><label for="cname">Category Name: </label></div>
+                        <input type="text" name="cname" id="cname" style="width:200px;" value="{{ data.catname }}" />
+                        <div class="subinfo" style="float: left; width: 98%;">Maximum 50 characters</div>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        <div style="float:left; width:120px;"><label for="mtype">Media Type: </label></div>
+                        <input type="text" name="mtype" id="mtype" style="width:200px;" value="{{ data.mtype }}" />
+                        <div class="subinfo" style="float: left; width: 98%;">Digits within 0 and 100</div>
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        {% if action == 'add' %}
+                            <input type="submit" value="Add Category" class="frmbtn" name="submit" id="submit" />
+                        {% endif %}
+                        {% if action == 'edit' %}
+                            <input type="submit" name="submit" value="Update" class="frmbtn" id="submit"/>
+                        {% endif %}
+                        <input type="reset" value="Reset" class="frmbtn" />
+                    </span>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    {% verbatim %}
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $("#frmcategory").validate({
+                errorLabelContainer: "#errors",
+                wrapper: "p",
+                rules: {
+                    cname: { required: true, maxlength: 50 },
+                    mtype: { required: true, digits: true, max: 100, min: 0 }
+                },
+                messages:
+                {
+                    cname: {
+                        required: "Please type the name for this category.",
+                        maxlength: "The category should be within 50 characters."
+                    },
+                    mtype: {
+                        required: "Please provide a number for media type.",
+                        digits: "The media type should be digits.",
+                        max: "The media type can have a maximum value of 100.",
+                        min: "The media type can have a minimum value of 0."
+                    }
+                }
+            });
+        });
+
+    </script>
+    {% endverbatim %}
+{% endblock %}

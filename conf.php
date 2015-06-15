@@ -2,21 +2,21 @@
 
 $conf = array(
     'production' => array(
-        'db_name' => 'prod_db',
+        'db_name' => 'artcmsdb',
         'development_mode' => false
     ),
     'development' => array(
-        'db_name' => 'test',
+        'db_name' => 'artcmsdb',
         'db_host' => 'localhost',
         'db_user' => 'root',
         'db_pass' => '',
         'development_mode' => true
     ),
     'staging' => array(
-        'db_name' => 'dev_db',
+        'db_name' => 'artcmsdb',
         'db_host' => 'localhost',
         'db_user' => 'root',
-        'db_pass' => '1234',
+        'db_pass' => '',
         'development_mode' => true
     )
 );

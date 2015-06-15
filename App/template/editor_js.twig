@@ -1,0 +1,17 @@
+<script type="text/javascript" src="{{ path_static }}/fckeditor/fckeditor.js"></script>
+
+{% verbatim %}
+<script type="text/javascript">
+    window.onload = function()
+    {
+        var ed = new FCKeditor( 'bodytxt' ) ;
+        ed.BasePath = "{% endverbatim %}{{ path_static }}{% verbatim %}/fckeditor/" ;
+        ed.Config["CustomConfigurationsPath"] = "edconfig.js?" + ( new Date() * 1 ) ;
+        ed.ToolbarSet = 'ArticleToolbar' ;
+        ed.Config['SkinPath'] = "skins/silver/" ;
+        ed.Width = 720;
+        ed.Height = 500;
+        ed.ReplaceTextarea() ;
+    }
+</script>
+{% endverbatim %}

@@ -1,0 +1,75 @@
+<div style="float:left;width:100%;background:#eee;">
+    <span style="float:left;width:80%;" ><a href="{{ path_url_postfix }}/uhome" class="sidelinks">Home</a> >> Article Management</span>
+    <span style="float:left;width:20%;" ><a href="{{ path_url_postfix }}/admin/articles/add" class="sidelinks" >Add Article</a></span>
+</div>
+<div style="float:left;width:100%;">
+    {%  if data and is_admin %}
+    <table class="innertbl" style="width:100%;float:left;border:1px solid #ddd;" >
+        <tr style="width:100%;float:left; text-align:left; " class="tblhead" >
+            <th style="width:20px;" class="tblfield" >Id</th>
+            <th style="width:100px;" class="tblfield" >Name</th>
+            <th style="width:170px;" class="tblfield" >URL</th>
+            <th style="width:50px;" class="tblfield">Category</th>
+            <th style="width:80px;" class="tblfield" >Insert Date</th>
+            <th style="width:80px;" class="tblfield" >Update Date</th>
+            <th style="width:60px;" class="tblfield" >Permission</th>
+            <th style="width:30px;" class="tblfield">Edit</th>
+            <th style="width:30px;" class="tblfield">Delete</th>
+        </tr>
+        {% for art in data %}
+            {% if loop.index is even %}
+                <tr style="width:100%; float:left;" bgcolor="#FFFFFF">
+            {% else %}
+                <tr style="width:100%; float:left;" bgcolor="#D5E4EA">
+            {% endif %}
+
+            <td class="tblfield" style="width:20px;">{{ art.id }}</td>
+
+            {% if art.url is not empty %}
+                <td class="tblfield" style="width:100px;"><a href="{{ path_url_postfix }}/a/{{ art.url }}" class="sidelinks">{{ art.title }}</a></td>
+            {% else %}
+                <td class="tblfield" style="width:100px;"><a href="{{ path_url_postfix }}/a/{{ art.id }}" class="sidelinks">{{ art.title }}</a></td>
+            {% endif %}
+
+            <td class="tblfield" style="width:170px;">{% if art.url is not empty %} {{ art.url }} {% endif %}</td>
+
+            {% for c in catList %}
+                {% if c.id == art.category_id %}
+                    <td class="tblfield" style="width:50px;">{{ c.catname }}</td>
+                {% endif %}
+            {% endfor %}
+            <td class="tblfield" style="width:80px;">{{ art.date_inserted|date("m/d/Y") }}</td>
+            <td class="tblfield" style="width:80px;">{{ art.date_updated|date("m/d/Y") }}</td>
+            <td class="tblfield" style="width:60px;">{% if art.state == 0 %} <a href="{{ path_url_postfix }}/admin/toggle/articles/permission/{{ art.id }}">Disable</a>{% elseif art.state == 1 %} <a href="{{ path_url_postfix }}/admin/toggle/articles/permission/{{ art.id }}">Enable</a>{% endif %}</td>
+            <td class="tblfield" style="width:30px;"><a href="{{ path_url_postfix }}/admin/articles/edit/{{ art.id }}">Edit</a></td>
+            <td class="tblfield" style="width:30px;"><a href="{{ path_url_postfix }}/admin/articles/delete/{{ art.id }}" class="del_art">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <table class="innertbl" style="width:100%;background:#fff;">
+        <tr style="width:100%; float:left;background:#684574;" class="tblhead">
+            <th class="spanlist" style="width:100%;padding:5px;">No article list found.</th>
+        </tr>
+    </table>
+    {% endif %}
+</div>
+
+{% verbatim %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('a.del_art').click(function(){
+            var link = $(this).attr('href');
+            jConfirm('Are you sure you want to delete this article?', 'Confirmation Dialog', function(r) {
+                if(r == true){
+                    window.location.href = link;
+                }
+                else{
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{% endverbatim %}

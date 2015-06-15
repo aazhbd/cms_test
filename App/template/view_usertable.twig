@@ -1,0 +1,104 @@
+<div style="float:left;width:100%;background:#eee;">
+    <span style="float:left;width:80%;" ><a href="{{ path_url_postfix }}/uhome" class="sidelinks">Home</a> >> User Management </span>
+    <span style="float:left;width:20%;" ><a href="{{ path_url_postfix }}/admin/users/add" class="sidelinks" >Add User</a></span>
+</div>
+<div style="float:left;width:100%;">
+    {% if data and is_admin %}
+    <table class="innertbl" style="width:100%;float:left;border:1px solid #ddd;" >
+        <tr style="width:100%;float:left; text-align:left; " class="tblhead" >
+            <th style="width:20px;" class="tblfield" >Id</th>
+            <th style="width:130px;" class="tblfield" >Email</th>
+            <th style="width:80px;" class="tblfield" >Create Date</th>
+            <th style="width:80px;" class="tblfield" >Update Date</th>
+            <th style="width:60px;" class="tblfield">Permission</th>
+            <th style="width:100px;" class="tblfield">Type</th>
+            <th style="width:60px;" class="tblfield">Status</th>
+            <th style="width:50px;" class="tblfield">Edit</th>
+            <th style="width:50px;" class="tblfield">Delete</th>
+        </tr>
+        {% for user in data %}
+            {% if loop.index is even %}
+                <tr style="width:100%; float:left;" bgcolor="#FFFFFF">
+            {% else %}
+                <tr style="width:100%; float:left;" bgcolor="#D5E4EA">
+            {% endif %}
+            <td class="tblfield" style="width:20px;">{{ user.id }}</td>
+            <td class="tblfield" style="width:130px;">{{ user.email }}</td>
+            <td class="tblfield" style="width:80px;">{{ user.date_inserted|date("m/d/Y") }}</td>
+            <td class="tblfield" style="width:80px;">{{ user.date_updated|date("m/d/Y") }}</td>
+            <td class="tblfield" style="width:60px;">
+            {% if user.email != email %}
+                {% if user.state == 0 %}<a href="{{ path_url_postfix }}/admin/toggle/users/permission/{{ user.id }}">Block</a>{% elseif user.state == 1 %} <a href="{{ path_url_postfix }}/admin/toggle/users/permission/{{ user.id }}">Allow</a> {% endif %}
+            {% else %}
+                {% if user.state == 0 %}
+                    Yes
+                {% else %}
+                    NO
+                {% endif %}
+            {% endif %}
+            </td>
+            <td class="tblfield" style="width:100px;">
+                {% if user.email != email %}
+                    {% if user.utype == 0 %}<a href="{{ path_url_postfix }}/admin/toggle/users/type/{{ user.id }}">Make Admin</a>{% elseif user.utype == 1 %} <a href="{{ path_url_postfix }}/admin/toggle/users/type/{{ user.id }}">Make General</a> {% endif %}
+                {% else %}
+                    {% if user.utype == 1 %}
+                        Admin
+                    {% else %}
+                        General User
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td class="tblfield" style="width:60px;">
+                {% if user.email != email %}
+                    {% if user.ustatus == 0 %} <a href="{{ path_url_postfix }}/admin/toggle/users/status/{{ user.id }}">Activate</a>{% elseif user.ustatus == 1 %} <a href="{{ path_url_postfix }}/admin/toggle/users/status/{{ user.id }}">Deactivate</a> {% endif %}
+                {% else %}
+                    {% if user.ustatus == 1 %}
+                        Active
+                    {% else %}
+                        InActive
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td class="tblfield" style="width:50px;">
+                {% if user.email != email %}
+                    <a href="{{ path_url_postfix }}/admin/users/edit/{{ user.id }}">Edit</a>
+                {% else %}
+                    <a href="{{ path_url_postfix }}/admin/account/edit">Edit</a>
+                {% endif %}
+            </td>
+            <td class="tblfield" style="width:50px;">
+                {% if user.email != email %}
+                    <a href="{{ path_url_postfix }}/admin/users/delete/{{ user.id }}" class="contdel">Delete</a>
+                {% else %}
+                    (Not Applicable)
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <table class="innertbl" style="width:100%;background:#fff;">
+        <tr style="width:100%; float:left;background:#684574;" class="tblhead">
+            <th class="spanlist" style="width:100%;padding:5px;">No user list found.</th>
+        </tr>
+    </table>
+    {% endif %}
+</div>
+{% verbatim %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('a.contdel').click(function(){
+            var link = $(this).attr('href');
+            jConfirm('Are you sure you want to delete this user?', 'Confirmation Dialog', function(r) {
+                if(r == true){
+                    window.location.href = link;
+                }
+                else{
+                    return false;
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{% endverbatim %}

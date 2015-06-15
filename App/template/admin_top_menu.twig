@@ -1,0 +1,27 @@
+<div class="topmenu" style="width: 98%;">
+    <div style="float: left; width: 48%;">
+        <a href="{{ path_url_postfix }}/uhome" {% if selMenu == "home" %} id="selMenu" {% endif %} >
+            <img src="{{ path_static }}images/home.png" alt="Users" style="width: 20px;  border:none;"/>
+            Home
+        </a>
+
+        <a href="{{ path_url_postfix }}/admin/users/viewall" {% if selMenu == "user"  %} id="selMenu" {% endif %}>
+            <img src="{{ path_static }}images/users.png" alt="Users" style="width: 20px;  border:none;"/>
+            User
+        </a>
+        <a href="{{ path_url_postfix }}/admin/categories/viewall" {% if selMenu == "category" %} id="selMenu" {% endif %}>
+            <img src="{{ path_static }}images/category.png" alt="Article" style="width: 20px;  border:none;"/>
+            Category
+        </a>
+        <a href="{{ path_url_postfix }}/admin/articles/viewall" {% if selMenu == "article" %} id="selMenu" {% endif %}>
+            <img src="{{ path_static }}images/article.png" alt="Category" style="width: 20px;  border:none;"/>
+            Article
+        </a>
+    </div>
+    <div style="float: right; width: 48%;" align="right">
+        <a href="{{ path_url_postfix }}/admin/account/edit" >
+            <img src="{{ path_static }}images/editacc.png" alt="Users" style="width: 20px; border:none; "/>
+            Edit Account
+        </a>
+    </div>
+</div>

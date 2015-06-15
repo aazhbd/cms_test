@@ -368,8 +368,8 @@ class Views extends Controller
     {
         $checked = $this->login->checkLogin($app);
 
-        $session_cookie = Login::SESSION_COOKIE;
-        $login_cookie = Login::LOGIN_COOKIE;
+        $session_cookie = SessionManager::SESSION_COOKIE;
+        $login_cookie = SessionManager::LOGIN_COOKIE;
 
         if($app->getRequest()->hasSession() && $checked) {
             if($app->getRequest()->getSession()->has("login") == true) {

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.3.11
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2015 at 09:07 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Jul 18, 2015 at 01:52 AM
+-- Server version: 5.6.24
+-- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,8 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `artcmsdb3`
+-- Database: `artcmsdb`
 --
+CREATE DATABASE IF NOT EXISTS `artcmsdb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `artcmsdb`;
 
 -- --------------------------------------------------------
 
@@ -26,8 +28,9 @@ SET time_zone = "+00:00";
 -- Table structure for table `articles`
 --
 
+DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `url` varchar(250) NOT NULL,
@@ -59,8 +62,9 @@ INSERT INTO `articles` (`id`, `uid`, `category_id`, `url`, `title`, `subtitle`, 
 -- Table structure for table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE IF NOT EXISTS `categories` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `catname` varchar(50) NOT NULL,
   `mtype` int(11) NOT NULL,
   `date_inserted` datetime NOT NULL,
@@ -84,8 +88,9 @@ INSERT INTO `categories` (`id`, `catname`, `mtype`, `date_inserted`, `date_updat
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `pass` varchar(20) DEFAULT NULL,
   `firstname` varchar(50) DEFAULT NULL,
@@ -117,19 +122,19 @@ INSERT INTO `users` (`id`, `email`, `pass`, `firstname`, `lastname`, `gender`, `
 -- Indexes for table `articles`
 --
 ALTER TABLE `articles`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `em_index` (`url`);
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `em_index` (`url`);
 
 --
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `em_index` (`email`);
+  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `em_index` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -139,17 +144,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `articles`
 --
 ALTER TABLE `articles`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
